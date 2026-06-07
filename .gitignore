@@ -1,0 +1,15 @@
+# Segredos do sistema — NUNCA commitar
+secrets/
+*.password
+*.hashed
+
+# Assets locais de inspiração
+inspiration/
+
+# Configuração específica da máquina — pode ser versionada se o repo for privado
+# Descomente para ignorar em repos públicos:
+# hosts/*/hamra.nix
+# hosts/*/hardware-configuration.nix
+
+# Arquivos de backup temporários
+*.bak
