@@ -1,45 +1,39 @@
 # ═══════════════════════════════════════════════════════════════
-# HAMRA.NIX — configuração específica desta máquina
+# HAMRA.NIX — Configuração específica desta máquina
 # ═══════════════════════════════════════════════════════════════
-# Gerado por: scripts/hamra-init.sh
-# Pode ser editado manualmente após a geração.
+# Lê os dados de hosts/main/hamra.json (gerado pelo wizard)
+# e mapeia para as opções do framework.
 #
-# Este arquivo NÃO deve ser modificado pelos módulos do framework.
-# Para regenerar: bash scripts/hamra-init.sh
+# Se hamra.json não existir, usa os defaults do módulo options.
+#
+# Não edite este arquivo manualmente para valores de configuração.
+# Use overrides.nix para customizações.
 # ═══════════════════════════════════════════════════════════════
 { lib, ... }:
+
+let
+  cfgPath = ./hamra.json;
+  hasConfig = builtins.pathExists cfgPath;
+  cfg = if hasConfig then builtins.fromJSON (builtins.readFile cfgPath) else {};
+  has = key: builtins.hasAttr key cfg;
+in
 {
-  hamra = {
-    # ── Identidade ─────────────────────────────────────────────
-    userName = "gabrielndsp";
-
-    # ── Sistema ────────────────────────────────────────────────
-    system = {
-      hostname = "workstation";
-      timezone = "America/Sao_Paulo";
-      locale   = "pt_BR.UTF-8";
-      keymap   = "us-acentos";
-    };
-
-    # ── Boot ───────────────────────────────────────────────────
-    boot = {
-      loader = "grub";           # ou "systemd-boot" para UEFI
-      grub.device = "/dev/sda";  # ignorado se loader = "systemd-boot"
-    };
-
-    # ── GPU ────────────────────────────────────────────────────
-    gpu = "intel";                 # amd | nvidia | intel | none
-
-    # ── Sessão ─────────────────────────────────────────────────
-    sessions.hyprland-caelestia = true;
-    defaultSession              = "hyprland-caelestia";
-
-    # ── Manutenção ─────────────────────────────────────────────
-    maintenance.gc = {
-      enable          = true;
-      maxGenerations  = 10;
-      schedule        = "weekly";
-      keepDays        = 30;
-    };
-  };
+  hamra = lib.mkMerge [
+    (lib.mkIf (has "userName") { userName = cfg.userName; })
+    (lib.mkIf (has "hostname") { system.hostname = cfg.hostname; })
+    (lib.mkIf (has "timezone") { system.timezone = cfg.timezone; })
+    (lib.mkIf (has "locale")   { system.locale = cfg.locale; })
+    (lib.mkIf (has "keymap")   { system.keymap = cfg.keymap; })
+    (lib.mkIf (has "gpu")      { gpu = cfg.gpu; })
+    (lib.mkIf (has "loader")   {
+      boot = {
+        loader = cfg.loader;
+        grub.device = if has "grubDevice" then cfg.grubDevice else "/dev/sda";
+      };
+    })
+    (lib.mkIf (has "session")  {
+      defaultSession = cfg.session;
+      sessions.${cfg.session} = true;
+    })
+  ];
 }

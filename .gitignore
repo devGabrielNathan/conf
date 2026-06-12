@@ -6,8 +6,10 @@ secrets/
 # Assets locais de inspiração
 inspiration/
 
-# Configuração específica da máquina — pode ser versionada se o repo for privado
-# Descomente para ignorar em repos públicos:
+# Configuração específica da máquina — gerada pelo wizard
+hosts/*/hamra.json
+
+# Pode ser versionada se o repo for privado; descomente para ignorar em repos públicos:
 # hosts/*/hamra.nix
 # hosts/*/hardware-configuration.nix
 
