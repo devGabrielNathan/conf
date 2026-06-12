@@ -13,6 +13,7 @@
 
     # Core: configuração presente em qualquer NixOS
     ../modules/nixos/core/boot.nix
+    ../modules/nixos/core/nix.nix
     ../modules/nixos/core/locale.nix
     ../modules/nixos/core/network.nix
     ../modules/nixos/core/keyboard.nix
