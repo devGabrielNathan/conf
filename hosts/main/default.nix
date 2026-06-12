@@ -1,22 +1,7 @@
-# ═══════════════════════════════════════════════════════════════
-# HOST PRINCIPAL — entrypoint da máquina
-# ═══════════════════════════════════════════════════════════════
-# Sessão ativa é controlada por hamra.nix → hamra.sessions.*
-#   Apenas UMA sessão desktop pode estar ativa por vez.
-#
-# Specialisations disponíveis (use --specialisation <nome>):
-#   plasma   → KDE Plasma 6
-#   gnome    → GNOME
-#   recovery → ambiente mínimo sem DE
-#
-# Para trocar de sessão:
-#   edite hosts/main/hamra.nix → sessions.* e defaultSession
-# ═══════════════════════════════════════════════════════════════
 { config, lib, ... }:
 
 let
-  inherit (lib) optional optionalAttrs;
-  cfg = config.hamra;
+  inherit (lib) optionalAttrs;
 in
 {
   imports = [
@@ -24,29 +9,31 @@ in
     ./hamra.nix
     ./overrides.nix
     ../../profiles/base.nix
-  ] ++ optional cfg.sessions.plasma ../../profiles/desktop/plasma.nix
-    ++ optional cfg.sessions.gnome ../../profiles/desktop/gnome.nix;
+    ../../profiles/desktop/common.nix
+    ../../modules/nixos/sessions/hyprland.nix
+    ../../modules/nixos/sessions/plasma.nix
+    ../../modules/nixos/sessions/gnome.nix
+  ];
 
-  # ═══════════════════════════════════════════
-  # HOME MANAGER
-  # ═══════════════════════════════════════════
   home-manager = {
     useUserPackages     = true;
     useGlobalPkgs       = true;
     backupFileExtension = "backup";
-    users.${cfg.userName} = {
+    users.${config.hamra.userName} = {
       home = {
-        username      = cfg.userName;
-        homeDirectory = "/home/${cfg.userName}";
+        username      = config.hamra.userName;
+        homeDirectory = "/home/${config.hamra.userName}";
         stateVersion  = "26.05";
       };
     };
   };
 
-  # ═══════════════════════════════════════════
-  # SPECIALISATIONS
-  # ═══════════════════════════════════════════
-  specialisation = {}
+  specialisation = let cfg = config.hamra; in {}
+  // optionalAttrs cfg.sessions.hyprland-caelestia {
+    hyprland-caelestia.configuration = {
+      imports = [ ../../profiles/desktop/hyprland-caelestia.nix ];
+    };
+  }
   // optionalAttrs cfg.sessions.plasma {
     plasma.configuration = {
       imports = [ ../../profiles/desktop/plasma.nix ];
@@ -63,19 +50,12 @@ in
     };
   };
 
-  # ═══════════════════════════════════════════
-  # ASSERTIONS — segurança contra configuração inválida
-  # ═══════════════════════════════════════════
-  # Garante que defaultSession corresponde a uma sessão ativa.
-  # Se falhar, o Nix aborta o build com a mensagem abaixo.
-  assertions = [
+  assertions = let cfg = config.hamra; in [
     {
       assertion = cfg.sessions.${cfg.defaultSession};
       message = ''
         Hamra: defaultSession ("${cfg.defaultSession}") não está habilitada.
-
         Edite hosts/main/hamra.nix e corrija:
-
           sessions.${cfg.defaultSession} = true;
           defaultSession = "${cfg.defaultSession}";
       '';

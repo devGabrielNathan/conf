@@ -31,8 +31,8 @@
     gpu = "intel";                 # amd | nvidia | intel | none
 
     # ── Sessão ─────────────────────────────────────────────────
-    sessions.plasma = true;
-    defaultSession  = "plasma";
+    sessions.hyprland-caelestia = true;
+    defaultSession              = "hyprland-caelestia";
 
     # ── Manutenção ─────────────────────────────────────────────
     maintenance.gc = {

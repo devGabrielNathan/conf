@@ -293,7 +293,7 @@ phase3_wizard() {
     grubDevice=$(ask "Dispositivo GRUB (ex: /dev/sda)" "${DETECTED_GRUB_DEV:-/dev/sda}")
   fi
 
-  session=$(ask "Sessão padrão (plasma/gnome)" "plasma")
+  session=$(ask "Sessão padrão (hyprland-caelestia/plasma/gnome)" "hyprland-caelestia")
 
   # ─────────────────────────────────────────────────────────────
   # FASE 4 — Gerar hamra.nix

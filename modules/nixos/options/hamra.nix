@@ -80,14 +80,16 @@
     # SESSÕES
     # ═══════════════════════════════════════════
     sessions = {
-      plasma   = lib.mkEnableOption "KDE Plasma 6 Desktop Environment";
-      gnome    = lib.mkEnableOption "GNOME Desktop Environment";
-      recovery = lib.mkEnableOption "Recovery mode (minimal, no DE)";
+      niri             = lib.mkEnableOption "Niri scrollable-tiling Wayland compositor";
+      plasma           = lib.mkEnableOption "KDE Plasma 6 Desktop Environment";
+      gnome            = lib.mkEnableOption "GNOME Desktop Environment";
+      hyprland-caelestia = lib.mkEnableOption "Hyprland + Caelestia Shell desktop";
+      recovery         = lib.mkEnableOption "Recovery mode (minimal, no DE)";
     };
 
     defaultSession = lib.mkOption {
-      type = lib.types.enum [ "plasma" "gnome" ];
-      default = "plasma";
+      type = lib.types.enum [ "niri" "plasma" "gnome" "hyprland-caelestia" ];
+      default = "niri";
       description = "Sessão padrão exibida pelo SDDM.";
     };
 
