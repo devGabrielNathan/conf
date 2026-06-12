@@ -51,24 +51,7 @@ wizard_main() {
   # ── Senha ────────────────────────────────────────────────────
   if [ "${CONFIG[password]}" != "__EXISTS__" ]; then
     echo "  Nenhuma senha existente detectada."
-    local pw1 pw2
-    while true; do
-      printf "  Senha do usuário (deixe em branco para 'nixos'): " >&2
-      read -rs pw1
-      echo >&2
-      if [ -z "$pw1" ]; then
-        pw1="nixos"
-        break
-      fi
-      printf "  Confirme a senha: " >&2
-      read -rs pw2
-      echo >&2
-      if [ "$pw1" = "$pw2" ]; then
-        break
-      fi
-      echo "  Senhas não conferem. Tente novamente." >&2
-    done
-    CONFIG[password]="$pw1"
+    CONFIG[password]=$(ask_password "Senha do usuário")
   fi
 }
 

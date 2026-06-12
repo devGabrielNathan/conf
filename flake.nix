@@ -42,13 +42,14 @@
       ];
     };
 
-    # Dev shell com ferramentas de lint e formatação Nix
+    # Dev shell com ferramentas de lint, formatação Nix e wizard
     devShells.${system}.default = pkgs.mkShell {
       buildInputs = with pkgs; [
         statix      # Linter Nix — detecta anti-padrões
         deadnix     # Detecta imports e variáveis mortas
         alejandra   # Formatador Nix opinativo
         nixd        # Language server (nixd LSP)
+        gum         # Terminal UI para o wizard interativo
       ];
       shellHook = ''
         echo ""
@@ -58,6 +59,7 @@
         echo "  deadnix .         — detectar imports mortos"
         echo "  alejandra .       — formatar"
         echo "  nix flake check   — verificar o flake inteiro"
+        echo "  gum              — TUI interativa do wizard"
         echo ""
       '';
     };

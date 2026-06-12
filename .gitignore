@@ -8,6 +8,7 @@ inspiration/
 
 # Configuração específica da máquina — gerada pelo wizard
 hosts/*/hamra.json
+hosts/*/hamra-config.nix
 
 # Pode ser versionada se o repo for privado; descomente para ignorar em repos públicos:
 # hosts/*/hamra.nix

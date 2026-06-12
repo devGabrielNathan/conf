@@ -15,39 +15,39 @@ discovery_main() {
 
   local found_any=false
 
-  # ── 1ª fonte: hamra.json existente ──────────────────────────
+  # ── 1ª fonte: hamra-config.nix existente ─────────────────
   if [ -f "${HAMRA_JSON:-}" ]; then
-    echo "  Lendo configuração existente de hamra.json..."
+    echo "  Lendo configuração existente de hamra-config.nix..."
     local val
-    val=$(read_json "userName" "$HAMRA_JSON")
+    val=$(extract_nix_string "$HAMRA_JSON" "userName")
     [ -n "$val" ] && CONFIG[userName]="$val" && found_any=true
 
-    val=$(read_json "hostname" "$HAMRA_JSON")
+    val=$(extract_nix_string "$HAMRA_JSON" "hostname")
     [ -n "$val" ] && CONFIG[hostname]="$val" && found_any=true
 
-    val=$(read_json "timezone" "$HAMRA_JSON")
+    val=$(extract_nix_string "$HAMRA_JSON" "timezone")
     [ -n "$val" ] && CONFIG[timezone]="$val" && found_any=true
 
-    val=$(read_json "locale" "$HAMRA_JSON")
+    val=$(extract_nix_string "$HAMRA_JSON" "locale")
     [ -n "$val" ] && CONFIG[locale]="$val" && found_any=true
 
-    val=$(read_json "keymap" "$HAMRA_JSON")
+    val=$(extract_nix_string "$HAMRA_JSON" "keymap")
     [ -n "$val" ] && CONFIG[keymap]="$val" && found_any=true
 
-    val=$(read_json "gpu" "$HAMRA_JSON")
+    val=$(extract_nix_string "$HAMRA_JSON" "gpu")
     [ -n "$val" ] && CONFIG[gpu]="$val" && found_any=true
 
-    val=$(read_json "loader" "$HAMRA_JSON")
+    val=$(extract_nix_string "$HAMRA_JSON" "loader")
     [ -n "$val" ] && CONFIG[loader]="$val" && found_any=true
 
-    val=$(read_json "grubDevice" "$HAMRA_JSON")
+    val=$(extract_nix_string "$HAMRA_JSON" "grub.device")
     [ -n "$val" ] && CONFIG[grubDevice]="$val" && found_any=true
 
-    val=$(read_json "session" "$HAMRA_JSON")
+    val=$(extract_nix_string "$HAMRA_JSON" "defaultSession")
     [ -n "$val" ] && CONFIG[session]="$val" && found_any=true
 
     if $found_any; then
-      echo "  ✓ Configuração restaurada de hamra.json"
+      echo "  ✓ Configuração restaurada de hamra-config.nix"
       return
     fi
   fi

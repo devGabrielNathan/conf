@@ -24,13 +24,24 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # ─────────────────────────────────────────────────────────────
 # Utilitários compartilhados (definidos antes dos módulos)
 # ─────────────────────────────────────────────────────────────
+detect_gum() {
+  command -v gum &>/dev/null && echo true || echo false
+}
+
+HAVE_GUM=$(detect_gum)
+
 ask() {
   local prompt="$1"
   local default="$2"
   local result
-  printf "  %s [%s]: " "$prompt" "$default" >&2
-  read -r result
-  echo "${result:-$default}"
+  if [ "$HAVE_GUM" = true ]; then
+    result=$(gum input --placeholder "$prompt" --value "$default" --width 50)
+    echo "${result:-$default}"
+  else
+    printf "  %s [%s]: " "$prompt" "$default" >&2
+    read -r result
+    echo "${result:-$default}"
+  fi
 }
 
 ask_choice() {
@@ -38,41 +49,91 @@ ask_choice() {
   local options="$2"
   local default="$3"
   local result
-  while true; do
-    printf "  %s (%s) [%s]: " "$prompt" "$options" "$default" >&2
-    read -r result
-    result="${result:-$default}"
-    if echo "$options" | tr '|' '\n' | grep -qx "$result"; then
-      echo "$result"
-      return
-    fi
-    echo "  Valor inválido. Escolha entre: $options" >&2
-  done
+  if [ "$HAVE_GUM" = true ]; then
+    IFS='|' read -ra opts <<< "$options"
+    result=$(gum choose "${opts[@]}" --header "$prompt")
+    echo "${result:-$default}"
+  else
+    while true; do
+      printf "  %s (%s) [%s]: " "$prompt" "$options" "$default" >&2
+      read -r result
+      result="${result:-$default}"
+      if echo "$options" | tr '|' '\n' | grep -qx "$result"; then
+        echo "$result"
+        return
+      fi
+      echo "  Valor inválido. Escolha entre: $options" >&2
+    done
+  fi
+}
+
+ask_password() {
+  local prompt="$1"
+  local pw1 pw2
+  if [ "$HAVE_GUM" = true ]; then
+    while true; do
+      pw1=$(gum input --password --placeholder "$prompt (Enter = 'nixos')" --width 50)
+      if [ -z "$pw1" ]; then
+        echo "nixos"
+        return
+      fi
+      pw2=$(gum input --password --placeholder "Confirme a senha" --width 50)
+      if [ "$pw1" = "$pw2" ]; then
+        echo "$pw1"
+        return
+      fi
+      gum style --foreground 1 "Senhas não conferem. Tente novamente."
+    done
+  else
+    while true; do
+      printf "  %s (deixe em branco para 'nixos'): " "$prompt" >&2
+      read -rs pw1
+      echo >&2
+      if [ -z "$pw1" ]; then
+        echo "nixos"
+        return
+      fi
+      printf "  Confirme a senha: " >&2
+      read -rs pw2
+      echo >&2
+      if [ "$pw1" = "$pw2" ]; then
+        echo "$pw1"
+        return
+      fi
+      echo "  Senhas não conferem. Tente novamente." >&2
+    done
+  fi
 }
 
 print_header() {
-  echo ""
-  echo "╔══════════════════════════════════════════════╗"
-  echo "║          HAMRA — Wizard de Instalação        ║"
-  echo "╚══════════════════════════════════════════════╝"
-  echo ""
+  if [ "$HAVE_GUM" = true ]; then
+    gum style \
+      --border double --padding "1 2" --margin "0 0" --align center \
+      --foreground 212 --width 50 \
+      "HAMRA" "Wizard de Instalação"
+  else
+    echo ""
+    echo "╔══════════════════════════════════════════════╗"
+    echo "║          HAMRA — Wizard de Instalação        ║"
+    echo "╚══════════════════════════════════════════════╝"
+    echo ""
+  fi
 }
 
 print_section() {
-  echo ""
-  echo "── $1 ──────────────────────────────────────────"
+  if [ "$HAVE_GUM" = true ]; then
+    echo ""
+    gum style --foreground 99 --bold "$1"
+  else
+    echo ""
+    echo "── $1 ──────────────────────────────────────────"
+  fi
 }
 
 extract_nix_string() {
   local file="$1"
   local key="$2"
   grep -oP "${key//./\\.}\s*=\s*\"\K[^\"]+" "$file" 2>/dev/null || true
-}
-
-read_json() {
-  local key="$1"
-  local file="$2"
-  grep -oP "\"${key}\"\s*:\s*\"\K[^\"]+" "$file" 2>/dev/null || true
 }
 
 check_root() {
@@ -137,12 +198,9 @@ echo ""
 echo "╔══════════════════════════════════════════════╗"
 echo "║               Setup Concluído!               ║"
 echo "╠══════════════════════════════════════════════╣"
-echo "║  Configuração gerada: hosts/main/hamra.json  ║"
+echo "║  Configuração gerada: hosts/main/hamra-config ║"
 echo "║                                              ║"
-echo "║  ATENÇÃO: o nixos-rebuild DEVE rodar          ║"
-echo "║  DE DENTRO de /etc/nixos, não do projeto.    ║"
-echo "║                                              ║"
-echo "║  Comandos:                                   ║"
+echo "║  Próximos passos:                            ║"
 echo "║    cd /etc/nixos                              ║"
 echo "║    sudo nixos-rebuild switch --flake .#main  ║"
 echo "║    sudo reboot                               ║"

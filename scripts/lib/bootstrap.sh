@@ -8,7 +8,7 @@
 #   PROJECT_DIR — diretório base do projeto
 #   HW_TARGET   — caminho para hardware-configuration.nix
 #   HAMRA_TARGET — caminho para hamra.nix
-#   HAMRA_JSON  — caminho para hamra.json
+#   HAMRA_JSON  — caminho para hamra-config.nix
 
 bootstrap_main() {
   print_section "Bootstrap"
@@ -22,7 +22,7 @@ bootstrap_main() {
   PROJECT_DIR="$source_dir"
   HW_TARGET="$PROJECT_DIR/hosts/main/hardware-configuration.nix"
   HAMRA_TARGET="$PROJECT_DIR/hosts/main/hamra.nix"
-  HAMRA_JSON="$PROJECT_DIR/hosts/main/hamra.json"
+  HAMRA_JSON="$PROJECT_DIR/hosts/main/hamra-config.nix"
 
   if [ "$source_dir" = "$target_dir" ]; then
     echo "  ✓ Executando diretamente de $target_dir"
@@ -57,7 +57,7 @@ bootstrap_main() {
   PROJECT_DIR="$target_dir"
   HW_TARGET="$PROJECT_DIR/hosts/main/hardware-configuration.nix"
   HAMRA_TARGET="$PROJECT_DIR/hosts/main/hamra.nix"
-  HAMRA_JSON="$PROJECT_DIR/hosts/main/hamra.json"
+  HAMRA_JSON="$PROJECT_DIR/hosts/main/hamra-config.nix"
 
   echo "  ✓ Arquivos copiados para $PROJECT_DIR"
 }
