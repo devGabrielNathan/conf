@@ -18,7 +18,9 @@ hardware_main() {
   print_section "Hardware"
 
   # ── hardware-configuration.nix ──────────────────────────────
-  if [ ! -f "$HW_TARGET" ]; then
+  if [ -f "$HW_TARGET" ] && grep -q "fileSystems" "$HW_TARGET" 2>/dev/null; then
+    echo "  ✓ hardware-configuration.nix já existe"
+  else
     if [ -f "/etc/nixos.bak/hardware-configuration.nix" ]; then
       echo "  Copiando hardware-configuration.nix do Calamares..."
       cp "/etc/nixos.bak/hardware-configuration.nix" "$HW_TARGET"
@@ -32,8 +34,6 @@ hardware_main() {
       exit 1
     fi
     echo "  ✓ hardware-configuration.nix pronto"
-  else
-    echo "  ✓ hardware-configuration.nix já existe"
   fi
 
   # ── GPU ─────────────────────────────────────────────────────
