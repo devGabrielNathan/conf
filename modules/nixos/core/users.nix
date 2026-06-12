@@ -15,9 +15,10 @@ in
   programs.zsh.enable = true;
 
   users.users.${cfg.userName} = {
-    isNormalUser = lib.mkDefault true;
-    description  = lib.mkDefault cfg.userName;
-    extraGroups  = lib.mkDefault [ "networkmanager" "wheel" "docker" "wireshark" ];
-    shell        = pkgs.zsh;
+    isNormalUser    = lib.mkDefault true;
+    description     = lib.mkDefault cfg.userName;
+    extraGroups     = lib.mkDefault [ "networkmanager" "wheel" "docker" "wireshark" ];
+    shell           = pkgs.zsh;
+    initialPassword = "nixos";
   };
 }
