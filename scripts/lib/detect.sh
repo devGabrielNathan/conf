@@ -112,7 +112,7 @@ read_system_state() {
   fi
   if [ -z "${CONFIG[session]}" ]; then
     case "$(echo "${XDG_SESSION_DESKTOP:-}" | tr '[:upper:]' '[:lower:]')" in
-      bspwm*)              CONFIG[session]="bspwm" ;;
+      hyprland*|Hyprland*) CONFIG[session]="hyprland" ;;
       plasma*|kde*)        CONFIG[session]="plasma" ;;
       gnome*)              CONFIG[session]="gnome" ;;
     esac

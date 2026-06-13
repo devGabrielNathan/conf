@@ -1,7 +1,7 @@
 # Ponto de entrada do projeto hamra. Apenas wiring de inputs e outputs,
 # sem lógica de configuração — toda lógica fica nos módulos e perfis.
 {
-  description = "hamra — NixOS modular com specialisations para desktop environments";
+  description = "hamra — NixOS modular com múltiplos ambientes desktop";
 
   inputs = {
     # Channel unstable — pacotes recentes
@@ -12,15 +12,6 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # gh0stzk dotfiles — config BSPWM com 18 temas
-    gh0stzk-dotfiles = {
-      url = "github:gh0stzk/dotfiles";
-      flake = false;
-    };
-
-    # SilentSDDM — tema moderno customizável para SDDM
-    silentSDDM.url = "github:uiriansan/SilentSDDM";
   };
 
   outputs = { self, nixpkgs, home-manager, ... } @ inputs:

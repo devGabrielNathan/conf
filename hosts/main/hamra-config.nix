@@ -19,7 +19,7 @@
       loader = "grub";
       grub.device = "/dev/sda";
     };
-    defaultSession = "bspwm";
-    sessions.bspwm = true;
+    defaultSession = "hyprland";
+    sessions.hyprland = true;
   };
 }

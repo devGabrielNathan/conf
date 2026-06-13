@@ -12,7 +12,7 @@ in
     ../../profiles/desktop/common.nix
     ../../modules/nixos/sessions/plasma.nix
     ../../modules/nixos/sessions/gnome.nix
-    ../../modules/nixos/sessions/bspwm.nix
+    ../../modules/nixos/sessions/hyprland.nix
   ];
 
   home-manager = {
@@ -39,9 +39,9 @@ in
       imports = [ ../../profiles/desktop/gnome.nix ];
     };
   }
-  // optionalAttrs cfg.sessions.bspwm {
-    bspwm.configuration = {
-      imports = [ ../../profiles/desktop/bspwm.nix ];
+  // optionalAttrs cfg.sessions.hyprland {
+    hyprland.configuration = {
+      imports = [ ../../profiles/desktop/hyprland.nix ];
     };
   };
 

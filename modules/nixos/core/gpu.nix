@@ -54,7 +54,7 @@ in
   assertions = lib.mkIf isNvidia [
     {
       assertion = true;
-      message   = "hamra: NVIDIA + GNOME pode ter problemas. Prefira bspwm.";
+      message   = "hamra: NVIDIA + GNOME pode ter problemas. Prefira Hyprland.";
     }
   ];
 }

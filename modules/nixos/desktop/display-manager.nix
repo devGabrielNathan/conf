@@ -20,7 +20,7 @@ in
     };
 
     defaultSession = lib.mkDefault (
-      if      defaultSession == "bspwm" then "bspwm"
+      if      defaultSession == "hyprland" then "hyprland"
       else if defaultSession == "plasma" then "plasma6"
       else    defaultSession
     );

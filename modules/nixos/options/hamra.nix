@@ -87,12 +87,12 @@
     sessions = {
       plasma           = lib.mkEnableOption "KDE Plasma 6 Desktop Environment";
       gnome            = lib.mkEnableOption "GNOME Desktop Environment";
-      bspwm            = lib.mkEnableOption "BSPWM + gh0stzk dotfiles (X11)";
+      hyprland         = lib.mkEnableOption "Hyprland Wayland compositor";
     };
 
     defaultSession = lib.mkOption {
-      type = lib.types.enum [ "plasma" "gnome" "bspwm" ];
-      default = "bspwm";
+      type = lib.types.enum [ "plasma" "gnome" "hyprland" ];
+      default = "hyprland";
       description = "Sessão padrão exibida pelo SDDM.";
     };
 
