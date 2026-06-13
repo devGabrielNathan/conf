@@ -1,9 +1,9 @@
-# Fontes do sistema conforme hamra.session.fonts.
+# Fontes do sistema: pacotes + fontconfig, conforme hamra.session.fonts.
 { pkgs, config, lib, ... }:
 
 let
-  cfg  = config.hamra.session;
-  nerd = cfg.fonts == "nerd";
+  cfg  = config.hamra.session.fonts;
+  nerd = cfg.packages == "nerd";
 in
 {
   fonts = {
@@ -15,12 +15,13 @@ in
       liberation_ttf
     ] ++ lib.optionals nerd [
       nerd-fonts.jetbrains-mono
+      nerd-fonts.caskaydia-mono
     ];
 
     fontconfig.defaultFonts = {
-      serif     = [ "Liberation Serif" "Noto Serif" ];
-      sansSerif = [ "Liberation Sans"  "Noto Sans" ];
-      monospace = if nerd then [ "JetBrainsMono Nerd Font" ] else [ "Liberation Mono" "Noto Mono" ];
+      serif     = [ cfg.serif ];
+      sansSerif = [ cfg.sansSerif ];
+      monospace = [ cfg.monospace ];
       emoji     = [ "Noto Color Emoji" ];
     };
   };

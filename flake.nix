@@ -12,6 +12,12 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Hyprland — compositor Wayland (versão do flake, mais recente que nixpkgs)
+    hyprland.url = "github:hyprwm/Hyprland";
+
+    # nix-colors — tema base16 para todo o sistema
+    nix-colors.url = "github:misterio77/nix-colors";
   };
 
   outputs = { self, nixpkgs, home-manager, ... } @ inputs:

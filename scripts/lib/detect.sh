@@ -16,12 +16,14 @@ read_existing_config() {
   fi
   log_info "Lendo hamra-config.nix existente"
   local found=false
-  for key in "userName" "hostname" "timezone" "locale" "keymap" "gpu" "loader" "defaultSession"; do
+  for key in "userName" "full_name" "email_address" "hostname" "timezone" "locale" "keymap" "gpu" "loader" "defaultSession"; do
     local val
     val=$(nix_read "$HAMRA_CONFIG" "$key")
     if [ -z "$val" ]; then continue; fi
     case "$key" in
       defaultSession) CONFIG[session]="$val" ;;
+      full_name)      CONFIG[fullName]="$val" ;;
+      email_address)  CONFIG[email]="$val" ;;
       *)              CONFIG[$key]="$val" ;;
     esac
     found=true

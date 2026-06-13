@@ -10,8 +10,9 @@
   imports = [
     # API pública — deve vir primeiro
     ../modules/nixos/options/hamra.nix
+    ../modules/nixos/options/omarchy.nix
 
-    # Core: configuração presente em qualquer NixOS
+    # Core: presente em qualquer NixOS
     ../modules/nixos/core/boot.nix
     ../modules/nixos/core/nix.nix
     ../modules/nixos/core/locale.nix
@@ -21,16 +22,7 @@
     ../modules/nixos/core/security.nix
     ../modules/nixos/core/gpu.nix
 
-    # Desktop: módulos reativos (hamra.session.*)
-    ../modules/nixos/desktop/audio.nix
-    ../modules/nixos/desktop/display-manager.nix
-    ../modules/nixos/desktop/env.nix
-    ../modules/nixos/desktop/fonts.nix
-    ../modules/nixos/desktop/polkit.nix
-    ../modules/nixos/desktop/portals.nix
-    ../modules/nixos/desktop/printing.nix
-
-    # Manutenção: GC automático e otimização
+    # Manutenção
     ../modules/nixos/maintenance/gc.nix
   ];
 }

@@ -8,6 +8,8 @@
 {
   hamra = {
     userName = "nixos";
+    full_name = "User";
+    email_address = "user@example.com";
     system = {
       hostname = "nixos";
       timezone = "America/Sao_Paulo";
@@ -21,5 +23,10 @@
     };
     defaultSession = "hyprland";
     sessions.hyprland = true;
+  };
+
+  omarchy = {
+    monitors = [ ];
+    scale = 1;
   };
 }

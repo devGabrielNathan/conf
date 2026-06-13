@@ -1,7 +1,6 @@
 # ═══════════════════════════════════════════════════════════════
 # PERFIL PLASMA — receita completa do KDE Plasma
 # ═══════════════════════════════════════════════════════════════
-{ ... }:
 { config, ... }:
 {
   imports = [
@@ -11,7 +10,6 @@
   ];
 
   home-manager.users.${config.hamra.userName}.imports = [
-    ../../modules/home/common/shell.nix
     ../../modules/home/common/terminal.nix
   ];
 }

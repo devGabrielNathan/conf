@@ -5,6 +5,8 @@ generate_main() {
 { lib, ... }: {
   hamra = {
     userName = "${CONFIG[userName]}";
+    full_name = "${CONFIG[fullName]}";
+    email_address = "${CONFIG[email]}";
     system = {
       hostname = "${CONFIG[hostname]}";
       timezone = "${CONFIG[timezone]}";

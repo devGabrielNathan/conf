@@ -3,6 +3,9 @@ secrets/
 *.password
 *.hashed
 
+# Submódulo de referência (omarchy-nix original)
+omarchy-nix/
+
 # Assets locais de inspiração
 inspiration/
 

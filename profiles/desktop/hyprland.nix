@@ -7,8 +7,6 @@
   ];
 
   home-manager.users.${config.hamra.userName}.imports = [
-    ../../modules/home/common/shell.nix
-    ../../modules/home/common/terminal.nix
     ../../modules/home/hyprland/default.nix
   ];
 }

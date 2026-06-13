@@ -26,7 +26,9 @@ wizard_main() {
     return
   fi
 
-  _wiz_val  "Nome do usuário"           userName     "nixos"
+  _wiz_val  "Nome do usuário (login)"    userName     "nixos"
+  _wiz_val  "Nome completo (git)"        fullName     "User"
+  _wiz_val  "Email (git)"                email        "user@example.com"
   _wiz_val  "Hostname"                   hostname     "nixos"
   _wiz_val  "Timezone"                   timezone     "America/Sao_Paulo"
   _wiz_val  "Locale"                     locale       "pt_BR.UTF-8"

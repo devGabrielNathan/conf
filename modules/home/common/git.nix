@@ -1,12 +1,10 @@
-# Configura Git global do usuário: identidade, aliases e delta como pager.
+# Configura Git global: aliases, delta, gh.
+# Identidade (user.name/user.email) é definida pelo perfil via config.hamra.
 { pkgs, ... }: {
   home-manager.sharedModules = [{
     programs.git = {
       enable = true;
       settings = {
-        user.name = "Your Name";
-        user.email = "your@email.com";
-
         alias = {
           st  = "status";
           co  = "checkout";
@@ -18,6 +16,7 @@
         pull.rebase = true;
         init.defaultBranch = "main";
         core.editor = "nvim";
+        credential.helper = "store";
       };
     };
 
@@ -28,6 +27,11 @@
         side-by-side = true;
         line-numbers = true;
       };
+    };
+
+    programs.gh = {
+      enable = true;
+      gitCredentialHelper = { enable = true; };
     };
   }];
 }

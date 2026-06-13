@@ -20,6 +20,18 @@
       description = "Nome do usuário principal do sistema.";
     };
 
+    full_name = lib.mkOption {
+      type = lib.types.str;
+      default = "User";
+      description = "Nome completo para configurar git.";
+    };
+
+    email_address = lib.mkOption {
+      type = lib.types.str;
+      default = "user@example.com";
+      description = "Email para configurar git.";
+    };
+
     # ═══════════════════════════════════════════
     # SISTEMA (FALLBACKS)
     # ═══════════════════════════════════════════
@@ -134,10 +146,30 @@
         default = false;
         description = "Habilitar impressão (CUPS).";
       };
-      fonts = lib.mkOption {
-        type = lib.types.enum [ "default" "nerd" ];
-        default = "default";
-        description = "Conjunto de fontes: default (Noto + Liberation) ou nerd (+ JetBrainsMono Nerd Font).";
+      fonts = {
+        packages = lib.mkOption {
+          type = lib.types.enum [ "default" "nerd" ];
+          default = "default";
+          description = "Pacotes de fonte: default (Noto + Liberation) ou nerd (+ JetBrainsMono Nerd Font).";
+        };
+
+        serif = lib.mkOption {
+          type = lib.types.str;
+          default = "Noto Serif";
+          description = "Fonte serifada padrão (fontconfig).";
+        };
+
+        sansSerif = lib.mkOption {
+          type = lib.types.str;
+          default = "Noto Sans";
+          description = "Fonte sans-serif padrão (fontconfig).";
+        };
+
+        monospace = lib.mkOption {
+          type = lib.types.str;
+          default = "Caskaydia Mono Nerd Font";
+          description = "Fonte monoespaçada padrão (fontconfig).";
+        };
       };
       env = {
         editor = lib.mkOption {
