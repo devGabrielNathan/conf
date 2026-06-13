@@ -9,9 +9,8 @@ in
   services.displayManager = {
     sddm = lib.mkIf (cfg.displayManager == "sddm") {
       enable = true;
-    }
-    // lib.optionalAttrs (cfg.displayManager == "sddm" && cfg.sddmTheme != null) {
-      theme = cfg.sddmTheme;
+      wayland.enable = lib.mkDefault (cfg.compositor == "wayland");
+      theme = lib.mkIf (cfg.sddmTheme != null) cfg.sddmTheme;
     };
 
     gdm = lib.mkIf (cfg.displayManager == "gdm") {
@@ -21,7 +20,7 @@ in
 
     defaultSession = lib.mkDefault (
       if      defaultSession == "hyprland" then "hyprland"
-      else if defaultSession == "plasma" then "plasma6"
+      else if defaultSession == "plasma"   then "plasma6"
       else    defaultSession
     );
   };

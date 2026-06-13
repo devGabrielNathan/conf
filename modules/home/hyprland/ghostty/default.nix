@@ -1,7 +1,7 @@
-{ config, ... }:
+{ config, osConfig, ... }:
 
 let
-  cfg = config.omarchy;
+  cfg = osConfig.hyprland;
   palette = config.colorScheme.palette;
 in {
   programs.ghostty = {
@@ -13,11 +13,10 @@ in {
       window-decoration = "none";
       font-family = cfg.primary_font;
       font-size = 12;
-      theme = "omarchy";
-      keybind = [ "ctrl+k=reset" ];
+      theme = "hyprland";
     };
     themes = {
-      omarchy = {
+      hyprland = {
         background = "#${palette.base00}";
         foreground = "#${palette.base05}";
         selection-background = "#${palette.base02}";

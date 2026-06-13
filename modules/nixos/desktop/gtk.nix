@@ -1,13 +1,16 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 {
   home-manager.users.${config.hamra.userName} = {
     gtk = {
-      enable = true;
-      theme = { name = "Adwaita:dark"; package = pkgs.gnome-themes-extra; };
+      enable = lib.mkDefault true;
+      theme = {
+        name = lib.mkDefault "Adwaita:dark";
+        package = lib.mkDefault pkgs.gnome-themes-extra;
+      };
       cursorTheme = {
-        package = pkgs.adwaita-icon-theme;
-        name    = "Adwaita";
-        size    = 24;
+        package = lib.mkDefault pkgs.adwaita-icon-theme;
+        name    = lib.mkDefault "Adwaita";
+        size    = lib.mkDefault 24;
       };
     };
 

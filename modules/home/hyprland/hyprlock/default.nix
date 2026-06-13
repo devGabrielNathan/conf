@@ -1,8 +1,8 @@
-{ config, ... }:
+{ config, osConfig, ... }:
 
 let
   palette = config.colorScheme.palette;
-  selectedWallpaperPath = (import ../../../../lib/selected-wallpaper.nix config).wallpaper_path;
+  selectedWallpaperPath = (import ../../../../lib/selected-wallpaper.nix osConfig).wallpaper_path;
 in {
   programs.hyprlock = {
     enable = true;

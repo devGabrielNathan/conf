@@ -5,7 +5,7 @@ let
     gnome-themes-extra pavucontrol
   ];
   systemPackages = with pkgs; [
-    git vim libnotify nautilus alejandra blueberry clipse fzf zoxide
+    git vim libnotify nautilus alejandra blueman clipse fzf zoxide
     ripgrep eza fd curl unzip wget gnumake
   ];
   discretionaryPackages = with pkgs; [

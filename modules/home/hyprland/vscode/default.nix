@@ -1,7 +1,7 @@
-{ config, pkgs, ... }:
+{ osConfig, pkgs, ... }:
 
 let
-  cfg = config.omarchy;
+  cfg = osConfig.hyprland;
   themes = import ../themes;
   theme = themes.${cfg.theme} or themes."catppuccin";
 in {

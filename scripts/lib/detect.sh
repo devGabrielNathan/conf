@@ -1,5 +1,9 @@
+if ! declare -p CONFIG &>/dev/null 2>&1; then
+  declare -A CONFIG
+fi
+
 detect_main() {
-  read_existing_config
+  declare -gA CONFIG
   read_flake_config
   read_legacy_config
   read_system_state

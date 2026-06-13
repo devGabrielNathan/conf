@@ -35,7 +35,7 @@ setup_main() {
 
   if command -v git &>/dev/null; then
     if git -C "$PROJECT_DIR" rev-parse --is-inside-work-tree &>/dev/null; then
-      : # already a git repo
+      git -C "$PROJECT_DIR" add -A
     else
       git -C "$PROJECT_DIR" init --quiet
       git -C "$PROJECT_DIR" add -A

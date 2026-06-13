@@ -1,7 +1,7 @@
-{ config, ... }:
+{ osConfig, ... }:
 
 let
-  selectedWallpaper = (import ../../../../lib/selected-wallpaper.nix config).wallpaper_path;
+  selectedWallpaper = (import ../../../../lib/selected-wallpaper.nix osConfig).wallpaper_path;
 in {
   home.file."Pictures/Wallpapers" = { source = ../wallpapers; recursive = true; };
 

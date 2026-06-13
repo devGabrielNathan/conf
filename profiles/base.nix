@@ -10,7 +10,7 @@
   imports = [
     # API pública — deve vir primeiro
     ../modules/nixos/options/hamra.nix
-    ../modules/nixos/options/omarchy.nix
+    ../modules/nixos/options/hyprland.nix
 
     # Core: presente em qualquer NixOS
     ../modules/nixos/core/boot.nix

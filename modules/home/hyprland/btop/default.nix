@@ -1,7 +1,7 @@
-{ config, ... }:
+{ config, osConfig, ... }:
 
 let
-  cfg = config.omarchy;
+  cfg = osConfig.hyprland;
   palette = config.colorScheme.palette;
 in {
   programs.btop = {

@@ -5,7 +5,7 @@ let
   hexToRgba = hex: alpha: "rgba(${hex}${alpha})";
   inactiveBorder = hexToRgba palette.base09 "aa";
   activeBorder = hexToRgba palette.base0D "aa";
-  cfg = config.omarchy;
+  cfg = osConfig.hyprland;
   hasNvidiaDrivers = builtins.elem "nvidia" osConfig.services.xserver.videoDrivers;
   nvidiaEnv = [
     "NVD_BACKEND,direct"
@@ -62,7 +62,7 @@ in {
       ecosystem = { no_update_news = true; };
 
       input = {
-        kb_layout = "us"; kb_variant="intl" kb_options = "compose:caps";
+        kb_layout = "us"; kb_variant = "intl"; kb_options = "compose:caps";
         follow_mouse = 1; sensitivity = 0;
         touchpad = { natural_scroll = false; };
       };
@@ -108,7 +108,7 @@ in {
       windowrule = [
         "suppressevent maximize, class:.*"
         "tile, class:^(chromium|google-chrome|google-chrome-unstable)$"
-        "float, class:^(org.pulseaudio.pavucontrol|blueberry.py)$"
+        "float, class:^(org.pulseaudio.pavucontrol|blueman-manager)$"
         "float, class:^(steam)$"
         "fullscreen, class:^(com.libretro.RetroArch)$"
         "opacity 0.97 0.9, class:.*"
@@ -132,7 +132,7 @@ in {
         "SUPER, ESCAPE, exec, hyprlock" "SUPER SHIFT, ESCAPE, exit,"
         "SUPER CTRL, ESCAPE, exec, reboot"
         "SUPER SHIFT CTRL, ESCAPE, exec, systemctl poweroff"
-        "SUPER, K, exec, ~/.local/share/omarchy/bin/omarchy-show-keybindings"
+        "SUPER, K, exec, ~/.local/share/hyprland/bin/hyprland-show-keybindings"
         "SUPER, J, togglesplit," "SUPER, P, pseudo,"
         "SUPER, V, togglefloating," "SUPER SHIFT, Plus, fullscreen,"
         "SUPER, left, movefocus, l" "SUPER, right, movefocus, r"

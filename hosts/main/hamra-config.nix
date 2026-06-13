@@ -25,7 +25,7 @@
     sessions.hyprland = true;
   };
 
-  omarchy = {
+  hyprland = {
     monitors = [ ];
     scale = 1;
   };

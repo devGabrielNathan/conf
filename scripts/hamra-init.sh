@@ -17,7 +17,7 @@ RED=$(tput setaf 1); GRN=$(tput setaf 2); YLW=$(tput setaf 3); BLU=$(tput setaf 
 
 # ── Estado ────────────────────────────────────────────────────
 declare -A CONFIG
-CONFIG=( [userName]="" [hostname]="" [timezone]="" [locale]="" [keymap]=""
+CONFIG=( [userName]="" [fullName]="" [email]="" [hostname]="" [timezone]="" [locale]="" [keymap]=""
          [gpu]="" [loader]="" [grubDevice]="" [session]="" [password]="" )
 PROJECT_DIR=""; HW_TARGET=""; HAMRA_CONFIG=""
 PASSWORD_EXISTS=false; CONFIG_LOADED=false

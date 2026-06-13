@@ -1,3 +1,3 @@
 {
-  home.file.".local/share/omarchy/bin" = { source = ../bin; recursive = true; };
+  home.file.".local/share/hyprland/bin" = { source = ../bin; recursive = true; };
 }

@@ -1,17 +1,18 @@
-{ config, lib, pkgs, inputs, ... }:
+{ config, lib, pkgs, inputs, osConfig ? { }, ... }:
 
 let
+  cfg = osConfig.hyprland or { theme = "gruvbox"; };
   themes = import ./themes;
-  isGenerated = config.omarchy.theme == "generated_light" || config.omarchy.theme == "generated_dark";
+  isGenerated = cfg.theme == "generated_light" || cfg.theme == "generated_dark";
   selectedTheme =
     if isGenerated then null
-    else if builtins.hasAttr config.omarchy.theme themes then themes.${config.omarchy.theme}
+    else if builtins.hasAttr cfg.theme themes then themes.${cfg.theme}
     else themes."catppuccin";
   generatedColorScheme =
     if isGenerated then
       (inputs.nix-colors.lib.contrib { inherit pkgs; }).colorSchemeFromPicture {
-        path = config.omarchy.theme_overrides.wallpaper_path;
-        variant = if config.omarchy.theme == "generated_light" then "light" else "dark";
+        path = cfg.theme_overrides.wallpaper_path or null;
+        variant = if cfg.theme == "generated_light" then "light" else "dark";
       }
     else
       null;
@@ -19,7 +20,7 @@ let
     if isGenerated then generatedColorScheme
     else inputs.nix-colors.colorSchemes.${selectedTheme.base16-theme};
 in
-lib.mkIf config.hamra.sessions.hyprland {
+{
   imports = [
     inputs.nix-colors.homeManagerModules.default
     ./hypr
@@ -34,15 +35,17 @@ lib.mkIf config.hamra.sessions.hyprland {
     ./vscode
   ];
 
-  colorScheme = colorScheme;
+  config = lib.mkIf (osConfig.hamra.sessions.hyprland or false) {
+    colorScheme = colorScheme;
 
-  programs.neovim.enable = true;
+    programs.neovim.enable = true;
 
-  gtk = {
-    enable = true;
-    theme = {
-      name = if config.omarchy.theme == "generated_light" then "Adwaita" else "Adwaita:dark";
-      package = pkgs.gnome-themes-extra;
+    gtk = {
+      enable = true;
+      theme = {
+        name = if cfg.theme == "generated_light" then "Adwaita" else "Adwaita:dark";
+        package = pkgs.gnome-themes-extra;
+      };
     };
   };
 }

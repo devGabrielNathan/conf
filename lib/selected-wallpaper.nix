@@ -1,6 +1,6 @@
 config:
 let
-  cfg = config.omarchy;
+  cfg = config.hyprland;
   wallpapers = {
     "catppuccin" = [ "catppuccin-totoro.png" ];
     "everforest" = [ "everforest-tree-tops.jpg" ];

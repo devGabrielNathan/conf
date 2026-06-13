@@ -1,6 +1,6 @@
 { lib, ... }:
 {
-  options.omarchy = {
+  options.hyprland = {
     theme = lib.mkOption {
       type = lib.types.either (lib.types.enum [
         "catppuccin" "everforest"

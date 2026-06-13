@@ -1,3 +1,7 @@
+if ! declare -p CONFIG &>/dev/null 2>&1; then
+  declare -A CONFIG
+fi
+
 generate_main() {
   mkdir -p "$(dirname "$HAMRA_CONFIG")"
 
@@ -40,7 +44,8 @@ NIX
   fi
 
   if command -v git &>/dev/null && git -C "$PROJECT_DIR" rev-parse --is-inside-work-tree &>/dev/null; then
-    git -C "$PROJECT_DIR" add -f "$HAMRA_CONFIG" "$HW_TARGET"
+    git -C "$PROJECT_DIR" add -A
+    git -C "$PROJECT_DIR" add -f "$HAMRA_CONFIG" "$HW_TARGET" 2>/dev/null || true
   fi
 
   if [ -n "${CONFIG[password]}" ] && [ "$PASSWORD_EXISTS" != true ]; then

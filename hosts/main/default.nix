@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, inputs, ... }:
 
 let
   inherit (lib) optionalAttrs;
@@ -19,6 +19,7 @@ in
     useUserPackages     = true;
     useGlobalPkgs       = true;
     backupFileExtension = "backup";
+    extraSpecialArgs    = { inherit inputs; };
     users.${config.hamra.userName} = {
       home = {
         username      = config.hamra.userName;
