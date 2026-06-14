@@ -12,7 +12,6 @@ in
   hardware.bluetooth.enable = true;
   programs.dconf.enable = true;
   programs.direnv.enable = true;
-  programs.wireshark.enable = true;
   services.blueman.enable = true;
   services.resolved.enable = true;
   virtualisation.containers.enable = true;
